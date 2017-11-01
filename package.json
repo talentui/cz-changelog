@@ -1,5 +1,5 @@
 {
-  "name": "@talentui/cz-changelog",
+  "name": "@talentui/cz-project-changelog",
   "version": "0.0.0-development",
   "description": "基于cz-conventional-changelog调整的为talentui项目使用的包",
   "main": "index.js",
@@ -8,10 +8,10 @@
     "test": "echo 'Tests need to be setup!'",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
-  "homepage": "https://github.com/talentui/cz-changelog",
+  "homepage": "https://github.com/talentui/cz-project-changelog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/talentui/cz-changelog.git"
+    "url": "https://github.com/talentui/cz-project-changelog.git"
   },
   "author": "Raymond Li <it1011@qq.om>",
   "license": "MIT",

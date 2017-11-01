@@ -4,12 +4,35 @@ var wrap = require('word-wrap');
 var map = require('lodash.map');
 var longest = require('longest');
 var rightPad = require('right-pad');
+var fs = require('fs');
+var path = require('path');
 
 var filter = function(array) {
   return array.filter(function(x) {
     return x;
   });
 };
+
+var getScope = function(){
+  var obj = {
+    name: 'scope'
+  }
+  var proDir = process.cwd();
+  var file = path.resolve(proDir,'./czconfig.json');
+  if(fs.existsSync(file)){
+    var scope = require(file);
+    return Object.assign({
+      type: 'list',
+      choices: scope,
+      message: "请选择此次修改的影响范围:\n"
+    },obj)
+  }else{
+    return Object.assign({
+      type: 'input',
+      message: '此次修改的影响范围是？(比如：模块或者文件名字)?\n'
+    },obj)
+  }
+}
 
 // This can be any kind of SystemJS compatible module.
 // We use Commonjs here, but ES6 or AMD would do just
@@ -55,44 +78,42 @@ module.exports = function (options) {
           message: '请选择要提交的修改类型:\n',
           choices: choices
         }
-        , {
-          type: 'input',
-          name: 'scope',
-          message: '此次修改的影响范围是？ (比如：模块或者文件名字)? (回车跳过)\n'
-        }
+        , getScope()
         , {
           type: 'input',
           name: 'subject',
-          message: '简单明了的描述一下修改:\n'
-        }, {
-          type: 'input',
-          name: 'body',
-          message: '提供一下详细的修改说明（回车跳过）\n'
-        }, {
-          type: 'confirm',
-          name: 'isBreaking',
-          message: '有没有破坏性变化（breaking change）?',
-          default: false
-        }, {
-          type: 'input',
-          name: 'breaking',
-          message: '有哪些破坏性变化:\n',
-          when: function(answers) {
-            return answers.isBreaking;
-          }
-        }, {
-          type: 'confirm',
-          name: 'isIssueAffected',
-          message: '是否和关联任何打开的事务？',
-          default: false
-        }, {
-          type: 'input',
-          name: 'issues',
-          message: '事务引用 (格式比如： "fix #123", "re #123".):\n',
-          when: function(answers) {
-            return answers.isIssueAffected;
-          }
+          message: '请提供此次提交的描述:\n'
         }
+        // , {
+        //   type: 'input',
+        //   name: 'body',
+        //   message: '提供一下详细的修改说明（回车跳过）\n'
+        // }
+        // , {
+        //   type: 'confirm',
+        //   name: 'isBreaking',
+        //   message: '有没有破坏性变化（breaking change）?',
+        //   default: false
+        // }, {
+        //   type: 'input',
+        //   name: 'breaking',
+        //   message: '有哪些破坏性变化:\n',
+        //   when: function(answers) {
+        //     return answers.isBreaking;
+        //   }
+        // }, {
+        //   type: 'confirm',
+        //   name: 'isIssueAffected',
+        //   message: '是否和关联任何打开的事务？',
+        //   default: false
+        // }, {
+        //   type: 'input',
+        //   name: 'issues',
+        //   message: '事务引用 (格式比如： "fix #123", "re #123".):\n',
+        //   when: function(answers) {
+        //     return answers.isIssueAffected;
+        //   }
+        // }
       ]).then(function(answers) {
 
         var maxLineWidth = 100;
@@ -111,19 +132,20 @@ module.exports = function (options) {
         // Hard limit this line
         var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
 
-        // Wrap these lines at 100 characters
-        var body = wrap(answers.body, wrapOptions);
+        // // Wrap these lines at 100 characters
+        // var body = wrap(answers.body, wrapOptions);
 
-        // Apply breaking change prefix, removing it if already present
-        var breaking = answers.breaking ? answers.breaking.trim() : '';
-        breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
-        breaking = wrap(breaking, wrapOptions);
+        // // Apply breaking change prefix, removing it if already present
+        // var breaking = answers.breaking ? answers.breaking.trim() : '';
+        // breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
+        // breaking = wrap(breaking, wrapOptions);
 
-        var issues = answers.issues ? wrap(answers.issues, wrapOptions) : '';
+        // var issues = answers.issues ? wrap(answers.issues, wrapOptions) : '';
 
-        var footer = filter([ breaking, issues ]).join('\n\n');
+        // var footer = filter([ breaking, issues ]).join('\n\n');
 
-        commit(head + '\n\n' + body + '\n\n' + footer);
+        // commit(head + '\n\n' + body + '\n\n' + footer);
+        commit(head);
       });
     }
   };
