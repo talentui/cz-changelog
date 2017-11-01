@@ -52,41 +52,43 @@ module.exports = function (options) {
         {
           type: 'list',
           name: 'type',
-          message: 'Select the type of change that you\'re committing:',
+          message: '请选择要提交的修改类型:\n',
           choices: choices
-        }, {
+        }
+        , {
           type: 'input',
           name: 'scope',
-          message: 'What is the scope of this change (e.g. component or file name)? (press enter to skip)\n'
-        }, {
+          message: '此次修改的影响范围是？ (比如：模块或者文件名字)? (回车跳过)\n'
+        }
+        , {
           type: 'input',
           name: 'subject',
-          message: 'Write a short, imperative tense description of the change:\n'
+          message: '简单明了的描述一下修改:\n'
         }, {
           type: 'input',
           name: 'body',
-          message: 'Provide a longer description of the change: (press enter to skip)\n'
+          message: '提供一下详细的修改说明（回车跳过）Provide a longer description of the change: (press enter to skip)\n'
         }, {
           type: 'confirm',
           name: 'isBreaking',
-          message: 'Are there any breaking changes?',
+          message: '有没有破坏性变化（breaking change）?',
           default: false
         }, {
           type: 'input',
           name: 'breaking',
-          message: 'Describe the breaking changes:\n',
+          message: '有哪些破坏性变化:\n',
           when: function(answers) {
             return answers.isBreaking;
           }
         }, {
           type: 'confirm',
           name: 'isIssueAffected',
-          message: 'Does this change affect any open issues?',
+          message: '是否和关联任何打开的事务？',
           default: false
         }, {
           type: 'input',
           name: 'issues',
-          message: 'Add issue references (e.g. "fix #123", "re #123".):\n',
+          message: '事务引用 (格式比如： "fix #123", "re #123".):\n',
           when: function(answers) {
             return answers.isIssueAffected;
           }
