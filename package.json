@@ -1,6 +1,6 @@
 {
   "name": "@talentui/cz-changelog",
-  "version": "0.0.0-semantically-released.0",
+  "version": "0.0.0-development",
   "description": "基于cz-conventional-changelog调整的为talentui项目使用的包",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "commitizen": "2.9.6",
-    "semantic-release": "^6.3.2"
+    "semantic-release": "^8.2.0"
   },
   "config": {
     "commitizen": {

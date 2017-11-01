@@ -67,7 +67,7 @@ module.exports = function (options) {
         }, {
           type: 'input',
           name: 'body',
-          message: '提供一下详细的修改说明（回车跳过）Provide a longer description of the change: (press enter to skip)\n'
+          message: '提供一下详细的修改说明（回车跳过）\n'
         }, {
           type: 'confirm',
           name: 'isBreaking',
