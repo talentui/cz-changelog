@@ -1,6 +1,6 @@
 {
   "name": "@talentui/cz-project-changelog",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "基于cz-conventional-changelog调整的为talentui项目使用的包",
   "main": "index.js",
   "scripts": {
